@@ -1,7 +1,6 @@
 const posts = require('../data/db.js')
 const fs = require('fs')
 const connection = require('../data/connection.js')
-const { log } = require('console')
 
 const index = (req, res) => {
 
@@ -117,7 +116,6 @@ const destroy = (req, res) => {
     })
 
 }
-
 
 module.exports = {
     index,
