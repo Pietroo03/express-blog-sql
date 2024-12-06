@@ -1,6 +1,7 @@
 const posts = require('../data/db.js')
 const fs = require('fs')
 const connection = require('../data/connection.js')
+const { log } = require('console')
 
 const index = (req, res) => {
 
@@ -19,7 +20,32 @@ const index = (req, res) => {
 }
 
 const show = (req, res) => {
-    const post = posts.find(post => post.slug.toLowerCase() === (req.params.slug))
+
+    const id = req.params.id
+
+    const sql = 'SELECT * FROM posts WHERE id=?'
+
+    connection.query(sql, [id], (err, results) => {
+        if (err) return res.status(500).json({ error: err })
+        if (!results[0]) return res.status(404).json({ error: 'Post non trovato' })
+
+        const post = results[0]
+
+        const responseData = {
+            data: post
+        }
+        console.log(responseData);
+        res.status(200).json(responseData)
+    })
+
+
+
+
+
+
+
+
+    /*     const post = posts.find(post => post.slug.toLowerCase() === (req.params.slug))
 
     if (!post) {
         return res.status(404).json({
@@ -29,7 +55,7 @@ const show = (req, res) => {
 
     return res.json({
         data: post
-    })
+    }) */
 }
 
 const store = (req, res) => {
