@@ -25,17 +25,35 @@ const show = (req, res) => {
 
     const sql = 'SELECT * FROM posts WHERE id=?'
 
+    const tagsSql = `
+        SELECT *
+        FROM tags
+        JOIN post_tag on tags.id = post_tag.tag_id
+        WHERE post_tag.post_id = ?
+    `
+
     connection.query(sql, [id], (err, results) => {
         if (err) return res.status(500).json({ error: err })
         if (!results[0]) return res.status(404).json({ error: 'Post non trovato' })
 
         const post = results[0]
 
-        const responseData = {
-            data: post
-        }
-        console.log(responseData);
-        res.status(200).json(responseData)
+        connection.query(tagsSql, [id], (err, tagsResults) => {
+            if (err) return res.status(500).json({ error: err })
+            console.log(tagsResults);
+
+            const tagLabels = tagsResults.map(tag => tag.label)
+
+            post.tags = tagLabels
+
+            const responseData = {
+                data: post,
+            }
+            console.log(responseData);
+            res.status(200).json(responseData)
+
+        })
+
     })
 
 }
