@@ -38,24 +38,6 @@ const show = (req, res) => {
         res.status(200).json(responseData)
     })
 
-
-
-
-
-
-
-
-    /*     const post = posts.find(post => post.slug.toLowerCase() === (req.params.slug))
-
-    if (!post) {
-        return res.status(404).json({
-            error: '404! Not Found'
-        })
-    }
-
-    return res.json({
-        data: post
-    }) */
 }
 
 const store = (req, res) => {
