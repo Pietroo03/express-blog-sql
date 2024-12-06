@@ -1,5 +1,6 @@
 const posts = require('../data/db.js')
 const fs = require('fs')
+const connection = require('../data/connection.js')
 
 const index = (req, res) => {
     res.json({
