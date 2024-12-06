@@ -77,7 +77,24 @@ const update = (req, res) => {
 }
 
 const destroy = (req, res) => {
-    const post = posts.find(post => post.slug.toLowerCase() === req.params.slug.toLowerCase())
+
+    const id = req.params.id
+
+    const sql = 'DELETE FROM posts WHERE id=?'
+
+    connection.query(sql, [id], (err, results) => {
+        console.log(err, results);
+        if (err) return res.status(500).json({ error: err })
+        if (results.affectedRows === 0) return res.status(400).json({ error: `Nessun post trovato con questo id: ${id}` })
+
+        return res.json({ status: 204, affectedRows: results.affectedRows })
+    })
+
+
+
+
+
+    /* const post = posts.find(post => post.slug.toLowerCase() === req.params.slug.toLowerCase())
 
     if (!post) {
         return res.status(404).json({
@@ -93,7 +110,7 @@ const destroy = (req, res) => {
         status: 200,
         data: newPosts,
         counter: newPosts.length
-    })
+    }) */
 }
 
 
