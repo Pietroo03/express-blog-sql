@@ -16,12 +16,6 @@ const index = (req, res) => {
         res.status(200).json(responseData)
     })
 
-
-
-    /* res.json({
-        data: posts,
-        counter: posts.length
-    }) */
 }
 
 const show = (req, res) => {
