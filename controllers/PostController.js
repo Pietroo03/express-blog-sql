@@ -3,10 +3,25 @@ const fs = require('fs')
 const connection = require('../data/connection.js')
 
 const index = (req, res) => {
-    res.json({
+
+    const sql = 'SELECT * FROM posts'
+
+    connection.query(sql, (err, results) => {
+        if (err) return res.status(500).json({ error: err })
+        const responseData = {
+            data: results,
+            counter: results.length
+        }
+
+        res.status(200).json(responseData)
+    })
+
+
+
+    /* res.json({
         data: posts,
         counter: posts.length
-    })
+    }) */
 }
 
 const show = (req, res) => {
